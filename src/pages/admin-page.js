@@ -48,13 +48,14 @@ export const AdminPage = () => {
               This page retrieves an <strong>admin message</strong> from an
               external API.
             </span>
-            <span>
-              <strong>
-                Only authenticated users with the{" "}
-                <code>read:admin-messages</code> permission should access this
-                page.
-              </strong>
-            </span>
+
+            <form action="/action_page.php">
+              <label for="fname">First name:</label>
+              <input type="text" id="fname" name="fname" value="John" />
+              <label for="lname">Last name:</label>
+              <input type="text" id="lname" name="lname" value="Doe" />
+              <button>Submit</button>
+            </form>
           </p>
           <CodeSnippet title="Admin Message" code={message} />
         </div>

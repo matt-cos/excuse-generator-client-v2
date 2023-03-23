@@ -5,7 +5,6 @@ import { PageLoader } from "./components/page-loader";
 import { AuthenticationGuard } from "./components/authentication-guard";
 import { AdminPage } from "./pages/admin-page";
 import { CallbackPage } from "./pages/callback-page";
-import { HomePage } from "./pages/home-page";
 import { NotFoundPage } from "./pages/not-found-page";
 import { ProfilePage } from "./pages/profile-page";
 import { PublicPage } from "./pages/public-page";
@@ -23,14 +22,13 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<PublicPage />} />
       <Route
         path="/profile"
         element={<AuthenticationGuard component={ProfilePage} />}
       />
-      <Route path="/public" element={<PublicPage />} />
       <Route
-        path="/admin"
+        path="/add"
         element={<AuthenticationGuard component={AdminPage} />}
       />
       <Route path="/callback" element={<CallbackPage />} />
