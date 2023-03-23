@@ -8,7 +8,7 @@ export const AdminPage = () => {
   const [message, setMessage] = useState("");
   const [newExcuse, setNewExcuse] = useState("");
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     let isMounted = true;
@@ -40,9 +40,11 @@ export const AdminPage = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     const accessToken = await getAccessTokenSilently();
-    const excuse = await addExcuse(accessToken, newExcuse);
-    // TODO: this will be the ID that we use to tie this to the USER
-    console.log(excuse.data.insertedId); 
+
+    await addExcuse(accessToken, {
+      excuse: newExcuse,
+      email: user.email,
+    });
   }
 
   return (
