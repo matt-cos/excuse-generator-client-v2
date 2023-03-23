@@ -20,11 +20,6 @@ export const MobileNavBarTabs = ({ handleClick }) => {
       {isAuthenticated && (
         <>
           <MobileNavBarTab
-            path="/protected"
-            label="Protected"
-            handleClick={handleClick}
-          />
-          <MobileNavBarTab
             path="/admin"
             label="Admin"
             handleClick={handleClick}

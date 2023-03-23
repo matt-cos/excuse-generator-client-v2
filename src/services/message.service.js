@@ -19,24 +19,6 @@ export const getPublicResource = async () => {
   };
 };
 
-export const getProtectedResource = async (accessToken) => {
-  const config = {
-    url: `${apiServerUrl}/api/excuses/protected`,
-    method: "GET",
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  const { data, error } = await callExternalApi({ config });
-
-  return {
-    data: data || null,
-    error,
-  };
-};
-
 export const getAdminResource = async (accessToken) => {
   const config = {
     url: `${apiServerUrl}/api/excuses/admin`,
