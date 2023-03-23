@@ -2,10 +2,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import { CodeSnippet } from "../components/code-snippet";
 import { PageLayout } from "../components/page-layout";
-import { getAdminResource } from "../services/message.service";
+import { getAdminResource, addExcuse } from "../services/message.service";
 
 export const AdminPage = () => {
   const [message, setMessage] = useState("");
+  const [newExcuse, setNewExcuse] = useState("");
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -36,6 +37,14 @@ export const AdminPage = () => {
     };
   }, [getAccessTokenSilently]);
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const accessToken = await getAccessTokenSilently();
+    const excuse = await addExcuse(accessToken, newExcuse);
+    // TODO: this will be the ID that we use to tie this to the USER
+    console.log(excuse.data.insertedId); 
+  }
+
   return (
     <PageLayout>
       <div className="content-layout">
@@ -48,15 +57,20 @@ export const AdminPage = () => {
               This page retrieves an <strong>admin message</strong> from an
               external API.
             </span>
-
-            <form action="/action_page.php">
-              <label for="fname">First name:</label>
-              <input type="text" id="fname" name="fname" value="John" />
-              <label for="lname">Last name:</label>
-              <input type="text" id="lname" name="lname" value="Doe" />
-              <button>Submit</button>
-            </form>
           </p>
+          <form onSubmit={handleSubmit} action="/excuses/add">
+            <label htmlFor="new-excuse">Submit your excuse:</label>
+            <br />
+            <textarea
+              type="text"
+              id="new-excuse"
+              name="new-excuse"
+              onChange={(e) => setNewExcuse(e.target.value)}
+              value={newExcuse}
+            />
+            <br />
+            <button>Submit</button>
+          </form>
           <CodeSnippet title="Admin Message" code={message} />
         </div>
       </div>

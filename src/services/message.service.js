@@ -37,3 +37,22 @@ export const getAdminResource = async (accessToken) => {
     error,
   };
 };
+
+export const addExcuse = async (accessToken, excuse) => {
+  const config = {
+    url: `${apiServerUrl}/api/excuses/add`,
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    data: { excuse },
+  };
+
+  const { data, error } = await callExternalApi({ config });
+
+  return {
+    data: data || null,
+    error,
+  };
+};
