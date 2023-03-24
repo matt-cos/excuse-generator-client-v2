@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
+import { useToast } from "@chakra-ui/react";
 import { CodeSnippet } from "../components/code-snippet";
 import { PageLayout } from "../components/page-layout";
 import { getAdminResource, addExcuse } from "../services/message.service";
@@ -7,8 +8,8 @@ import { getAdminResource, addExcuse } from "../services/message.service";
 export const AdminPage = () => {
   const [message, setMessage] = useState("");
   const [newExcuse, setNewExcuse] = useState("");
-
   const { user, getAccessTokenSilently } = useAuth0();
+  const toast = useToast();
 
   useEffect(() => {
     let isMounted = true;
@@ -41,9 +42,29 @@ export const AdminPage = () => {
     e.preventDefault();
     const accessToken = await getAccessTokenSilently();
 
-    await addExcuse(accessToken, {
+    const { data, error } = await addExcuse(accessToken, {
       excuse: newExcuse,
       email: user.email,
+    });
+
+    if (error) {
+      toast({
+        title: "Uh oh.",
+        description: "Something went wrong. Try again later.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+
+      return;
+    }
+
+    toast({
+      title: "Thanks.",
+      description: "Your excuse has been submitted.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
     });
   }
 

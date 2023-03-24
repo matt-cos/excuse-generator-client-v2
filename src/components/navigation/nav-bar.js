@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton } from "../buttons/login-button";
@@ -8,9 +8,9 @@ import { SignupButton } from "../buttons/signup-button";
 
 export const NavBar = () => {
   const { isAuthenticated } = useAuth0();
-  
+
   return (
-    <Box>
+    <Container>
       <NavLink to="/">Home</NavLink>
       {isAuthenticated && (
         <>
@@ -29,6 +29,6 @@ export const NavBar = () => {
         </>
       )}
       {isAuthenticated && <LogoutButton />}
-    </Box>
+    </Container>
   );
 };
